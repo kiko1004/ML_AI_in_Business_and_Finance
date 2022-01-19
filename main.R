@@ -44,4 +44,7 @@ for (country in countries)
 }
 
 summary(corr_stringency_total_cases)
-
+# Basic data exploration -----------------------------------
+# Feature selection --------------------------------------
+features <- c("total_cases", "total_cases_per_million", "total_deaths", "total_deaths_per_million", "icu_patients", "icu_patients_per_million",
+              "hosp_patients", "hosp_patients_per_million", "reproduction_rate", "total_vaccinations_per_hundred", "total_vaccinations", "stringency_index")
