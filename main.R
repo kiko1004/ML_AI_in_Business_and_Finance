@@ -2,6 +2,7 @@
 
 library(dplyr)
 library(lubridate)
+library(leaps)
 
 # Loading data and transformation and basic overview --------------------------
 
@@ -48,3 +49,11 @@ summary(corr_stringency_total_cases)
 # Feature selection --------------------------------------
 features <- c("total_cases", "total_cases_per_million", "total_deaths", "total_deaths_per_million", "icu_patients", "icu_patients_per_million",
               "hosp_patients", "hosp_patients_per_million", "reproduction_rate", "total_vaccinations_per_hundred", "total_vaccinations", "stringency_index")
+
+df_of_interest = dd[, features]
+fs=regsubsets(stringency_index~.,data=df_of_interest,nvmax=20)
+summary(fs)$which
+names(summary(fs))
+summary(fs)$adjr2
+write.csv(df_of_interest, 'stringency_index.csv')
+
