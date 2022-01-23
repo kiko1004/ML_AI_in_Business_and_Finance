@@ -57,3 +57,5 @@ names(summary(fs))
 summary(fs)$adjr2
 write.csv(df_of_interest, 'stringency_index.csv')
 
+predict_future_cases_df = dd[, c('location', 'date', 'total_cases')]
+write.csv(predict_future_cases_df, 'total_cases.csv')
