@@ -83,7 +83,7 @@ profile_missing(aux)
 #Continuous features----
 plot_histogram(aux)
 windows()
-plot_bar(dd$stringency_index, by = "dd$total_deaths") #not working 
+
 
 
 
