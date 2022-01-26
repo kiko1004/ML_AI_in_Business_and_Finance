@@ -3,6 +3,8 @@
 library(dplyr)
 library(lubridate)
 library(leaps)
+library(DataExplorer)
+library(tidyverse)
 
 # Loading data and transformation and basic overview --------------------------
 
@@ -46,6 +48,48 @@ for (country in countries)
 
 summary(corr_stringency_total_cases)
 # Basic data exploration -----------------------------------
+# Create a general report
+dd %>%
+  create_report(
+    output_file = "covid_19_report",
+    output_dir = "ML/",
+    y = "stringency_index",
+    report_title = "covid_19_report"
+  )
+
+
+dd %>% introduce()
+dd %>% plot_intro()
+
+aux = data.frame(dd$total_cases, 
+                 dd$total_cases_per_million, 
+                 dd$total_deaths, 
+                 dd$total_deaths_per_million, 
+                 dd$icu_patients, 
+                 dd$icu_patients_per_million,
+                 dd$hosp_patients, 
+                 dd$hosp_patients_per_million,
+                 dd$reproduction_rate,
+                 dd$total_vaccinations_per_hundred, 
+                 dd$total_vaccinations, 
+                 dd$stringency_index)
+create_report(aux, y = "dd.stringency_index")
+
+#Missing values -----
+dd %>% plot_missing()
+plot_missing(aux)
+profile_missing(aux)
+
+#Continuous features----
+plot_histogram(aux)
+windows()
+plot_bar(dd$stringency_index, by = "dd$total_deaths") #not working 
+
+
+
+plot_correlation(na.omit(aux), type = "c")
+
+
 # Feature selection --------------------------------------
 features <- c("total_cases", "total_cases_per_million", "total_deaths", "total_deaths_per_million", "icu_patients", "icu_patients_per_million",
               "hosp_patients", "hosp_patients_per_million", "reproduction_rate", "total_vaccinations_per_hundred", "total_vaccinations", "stringency_index")
